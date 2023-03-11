@@ -8,11 +8,18 @@ const express = require('express'),
     app = express(),
     http = require('http'),
     fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    basicAuth = require('express-basic-auth')
 
 const config = JSON.parse(fs.readFileSync('./config.json', {
     encoding: 'utf8'
 }));
+
+app.use(basicAuth({
+    users: { 'sb': process.env.sb233password},
+    challenge: true,
+    realm: 'Imb4T3st4ppss',
+}))
 
 const server = http.createServer(app);
 
